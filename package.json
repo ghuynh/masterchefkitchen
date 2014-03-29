@@ -1,0 +1,28 @@
+{
+  "name": "CodeChallengefromMi9",
+  "author": "George Huynh",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "2.5.11",
+    "http": "0.0.0",
+    "querystring": "^0.2.0",
+    "url": "^0.7.9"
+  },
+  "engines": {
+    "node": "0.8.4",
+    "npm": "1.1.45"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "description": "Mi9 Challenge George",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@t@heroku.com:mi9challengegeorge.git"
+  },
+  "keywords": [
+    "mi9"
+  ],
+  "license": "ISC"
+}
