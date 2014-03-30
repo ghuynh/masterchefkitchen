@@ -35,10 +35,11 @@ function onRequest(request, response) {
 					  // console.log(data[i]);
 					// }
 				  // });
-  
-  
+  console.log('CSVdata');
+  console.log(CSVdata);
 			    var JSONdata = JSON.parse(requestBody.fridgejson);
-
+  console.log('Json data');
+  console.log(JSONdata);
 
 
 
