@@ -27,7 +27,10 @@ function onRequest(request, response) {
 
 		});
 		request.on('end', function() {
-
+  console.log('Data=');
+  console.log(requestBody);
+  
+  
             try{
 				var CSVdata = qs.parse(requestBody.fridgecsv);
 				// $.csv.toArrays(csv, {}, function(err, data) {
