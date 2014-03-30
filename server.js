@@ -32,15 +32,15 @@ function onRequest(request, response) {
   
   
             try{
-				var CSVdata = qs.parse(requestBody.fridgecsv);
+				var CSVdata = qs.parse(requestBody);
 				// $.csv.toArrays(csv, {}, function(err, data) {
 					// for(var i=0, len=data.length; i<len; i++) {
 					  // console.log(data[i]);
 					// }
 				  // });
   console.log('CSVdata');
-  console.log(CSVdata);
-			    var JSONdata = JSON.parse(requestBody.fridgejson);
+  console.log(CSVdata.fridgecsv);
+			    var JSONdata = JSON.parse(CSVdata.fridgejson);
   console.log('Json data');
   console.log(JSONdata);
 
