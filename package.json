@@ -1,5 +1,5 @@
 {
-  "name": "CodeChallengefromMi9",
+  "name": "MasterchefKitchen",
   "author": "George Huynh",
   "version": "0.0.1",
   "dependencies": {
@@ -15,14 +15,14 @@
   "scripts": {
     "start": "node index.js"
   },
-  "description": "Mi9 Challenge George",
+  "description": "Masterchef Kitchen George",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git@t@heroku.com:mi9challengegeorge.git"
+    "url": "git@t@heroku.com:masterchefkitchen.git"
   },
   "keywords": [
-    "mi9"
+    "masterchef"
   ],
   "license": "ISC"
 }

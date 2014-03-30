@@ -1,14 +1,18 @@
 var http = require("http");
 var url = require("url");
 var qs = require("querystring");
+var fs = require('fs');
+var $ = jQuery = require('jQuery');
+require('./jquery.csv.js');
+
 
 var formOutput = '<html><body>'
     + '<h1>What to cook tonight - George Huynh\'s kitchen </h1>'
     + '<html><body>'
     + '<h1>Please provide data for fridges in CSV and JSON formats</h1>'
     + '<form method="post" action="." enctype="application/x-www-form-urlencoded"><fieldset>'
-    + '<div><label for="payload">CSV DATA:</label><textare  id="fridgecsv" name="fridgecsv" cols=40 rows=6" /></div>'
-    + '<div><label for="payload">JSON DATA:</label><textare id="fridgejson" name="fridgejson" cols=40 rows=6/></div>'
+    + '<div><label for="payload">CSV DATA:</label><textarea  id="fridgecsv" name="fridgecsv" cols=40 rows=6" /></div>'
+    + '<div><label for="payload">JSON DATA:</label><textarea id="fridgejson" name="fridgejson" cols=40 rows=6/></div>'
 
 + '<div><input id="Post" type="submit" value="Pos" /></div></fieldset></form></body></html>';
 
@@ -31,7 +35,15 @@ function onRequest(request, response) {
 		request.on('end', function() {
 
             try{
-			    var JSONdata = JSON.parse(requestBody);
+				var CSVdata = qs.parse(requestBody.fridgecsv);
+				$.csv.toArrays(csv, {}, function(err, data) {
+					for(var i=0, len=data.length; i<len; i++) {
+					  console.log(data[i]);
+					}
+				  });
+  
+  
+			    var JSONdata = JSON.parse(requestBody.fridgejson);
 
 
 
