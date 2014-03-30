@@ -10,8 +10,8 @@ var formOutput = '<html><body>'
     + '<h1>What to cook tonight - George Huynh\'s kitchen </h1>'
     + '<h2>Please provide data for fridges in CSV and JSON formats</h2>'
     + '<form method="post" action="." enctype="application/x-www-form-urlencoded"><fieldset>'
-    + '<div><label for="fridgecsv">CSV DATA:</label><textarea  id="fridgecsv" name="fridgecsv" cols=40 rows=6></textarea</div>'
-    + '<div><label for="fridgejson">JSON DATA:</label><textarea id="fridgejson" name="fridgejson" cols=40 rows=6></textarea</div>'
+    + '<div><label for="fridgecsv">CSV DATA:</label><textarea  id="fridgecsv" name="fridgecsv" cols=40 rows=6></textarea></div>'
+    + '<div><label for="fridgejson">JSON DATA:</label><textarea id="fridgejson" name="fridgejson" cols=40 rows=6></textarea></div>'
 	+ '<div><input id="Post" type="submit" value="Post" /></div></fieldset></form></body></html>';
 function start(route){
 function onRequest(request, response) {
