@@ -12,7 +12,7 @@ var formOutput = '<html><body>'
     + '<form method="post" action="." enctype="application/x-www-form-urlencoded"><fieldset>'
     + '<div><label for="fridgecsv">CSV DATA:</label><textarea  id="fridgecsv" name="fridgecsv" cols=40 rows=6></textarea></div>'
     + '<div><label for="fridgejson">JSON DATA:</label><textarea id="fridgejson" name="fridgejson" cols=40 rows=6></textarea></div>'
-	+ '<div><input id="Post" type="submit" value="Post" /></div></fieldset></form></body></html>';
+	+ '<div><input id="Post" type="submit" value="Advise what to cook tonight?" /></div></fieldset></form></body></html>';
 function start(route){
 function onRequest(request, response) {
     var pathname = url.parse(request.url).pathname;
@@ -33,13 +33,18 @@ function onRequest(request, response) {
   
             try{
 				var CSVdata = qs.parse(requestBody);
-				// $.csv.toArrays(csv, {}, function(err, data) {
-					// for(var i=0, len=data.length; i<len; i++) {
-					  // console.log(data[i]);
-					// }
-				  // });
+				var fridge = new Array();
+
   console.log('CSVdata');
   console.log(CSVdata.fridgecsv);
+				CSVdatafridgecsv = CSVdata.fridgecsv;
+				for (var i=0, len = CSVdatafridgecsv.length; i < len; i++) {
+					var CSVdatafridge = CSVdatafridgecsv[i].split(",");
+					fridge.push(CSVdatafridge);
+				}
+  console.log('CSVdata array');
+  console.log(fridge);				
+				
 			    var JSONdata = JSON.parse(CSVdata.fridgejson);
   console.log('Json data');
   console.log(JSONdata);
@@ -48,14 +53,14 @@ function onRequest(request, response) {
 
 
                 var ret = new Array();
-                for (var prop in JSONdata.fridgejson){
+                for (var prop in JSONdata){
 
-                    var value = JSONdata.fridgejson[prop];
-                    var showimg = value.image;
-                    var drm = value.drm;
-                    var episodeCount = value.episodeCount;
-                    if (showimg && drm !== false && episodeCount > 0 ){
-                         var ret1 = {"image": showimg.showImage, "slug": value.slug, "title": value.title};
+                    var value = JSONdata[prop];
+                    var name = value.name;
+                    var ingredients = value.ingredients;
+
+                    if (name){
+                        var ret1 = {"item": ingredients.item, "amount": ingredients.amount, "unit": ingredients.unit};
                         ret.push((ret1));
                     }
 
