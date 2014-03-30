@@ -2,8 +2,8 @@ var http = require("http");
 var url = require("url");
 var qs = require("querystring");
 var fs = require('fs');
-var $ = jQuery = require('jQuery');
-require('./jquery.csv.js');
+// var $ = jQuery = require('jQuery');
+// require('./jquery.csv.js');
 
 
 var formOutput = '<html><body>'
@@ -36,11 +36,11 @@ function onRequest(request, response) {
 
             try{
 				var CSVdata = qs.parse(requestBody.fridgecsv);
-				$.csv.toArrays(csv, {}, function(err, data) {
-					for(var i=0, len=data.length; i<len; i++) {
-					  console.log(data[i]);
-					}
-				  });
+				// $.csv.toArrays(csv, {}, function(err, data) {
+					// for(var i=0, len=data.length; i<len; i++) {
+					  // console.log(data[i]);
+					// }
+				  // });
   
   
 			    var JSONdata = JSON.parse(requestBody.fridgejson);
