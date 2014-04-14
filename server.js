@@ -2,6 +2,7 @@ var http = require("http");
 var url = require("url");
 var qs = require("querystring");
 var fs = require('fs');
+var rt = require('./router.js');
 
 var formOutput = '<html><body>'
     + '<h1>What to cook tonight - George Huynh\'s kitchen </h1>'
@@ -39,7 +40,7 @@ function onRequest(request, response) {
 					var CSVdatafridge = CSVdatafridgecsv[i].split(",");
                     console.log('CSVdatafridge');
                     console.log(CSVdatafridge);
-                    if (!checkDateInpuWithTodays(CSVdatafridge[3])){
+                    if (!rt.checkDateInpuWithTodays(CSVdatafridge[3])){
                         console.log(CSVdatafridge[0] + ' can not be used!');
                     }else{
                         var CSVdatafridgearr = {"item": CSVdatafridge[0], "amount": CSVdatafridge[1], "unit": CSVdatafridge[3]};
@@ -61,7 +62,7 @@ function onRequest(request, response) {
                     var ingredients = value.ingredients;
 
                     if (name){
-                        if (checkfridge(fridge, ingredients.item, ingredients.amount, ingredients.unit)){
+                        if (rt.checkfridge(fridge, ingredients.item, ingredients.amount, ingredients.unit)){
                             var ret1 = {"name" : name, "item": ingredients.item, "amount": ingredients.amount, "unit": ingredients.unit};
                         }
 
