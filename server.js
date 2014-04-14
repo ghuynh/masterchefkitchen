@@ -2,7 +2,8 @@ var http = require("http");
 var url = require("url");
 var qs = require("querystring");
 var fs = require('fs');
-var rt = require('./router.js');
+// Include the two functions: checkDateInpuWithTodays and checkfridge
+var func = require("./functions.js");
 
 var formOutput = '<html><body>'
     + '<h1>What to cook tonight - George Huynh\'s kitchen </h1>'
@@ -25,36 +26,26 @@ function onRequest(request, response) {
 
 		});
 		request.on('end', function() {
-  console.log('Data=');
-  console.log(requestBody);
-  
-  
+
             try{
 				var CSVdata = qs.parse(requestBody);
 				var fridge = new Array();
 
-  console.log('CSVdata');
-  console.log(CSVdata.fridgecsv);
 				CSVdatafridgecsv = CSVdata.fridgecsv;
 				for (var i=0, len = CSVdatafridgecsv.length; i < len; i++) {
 					var CSVdatafridge = CSVdatafridgecsv[i].split(",");
-                    console.log('CSVdatafridge');
-                    console.log(CSVdatafridge);
-                    if (!rt.checkDateInpuWithTodays(CSVdatafridge[3])){
+                    // Check if the item is expired
+                    if (!func.checkDateInpuWithTodays(CSVdatafridge[3])){
                         console.log(CSVdatafridge[0] + ' can not be used!');
                     }else{
                         var CSVdatafridgearr = {"item": CSVdatafridge[0], "amount": CSVdatafridge[1], "unit": CSVdatafridge[3]};
 					    fridge.push(CSVdatafridgearr);
                     }
 				}
-  console.log('CSVdata array');
-  console.log(fridge);				
-				
-			    var JSONdata = JSON.parse(CSVdata.fridgejson);
-  console.log('Json data');
-  console.log(JSONdata);
 
-                var ret = new Array();
+			    var JSONdata = JSON.parse(CSVdata.fridgejson);
+
+                var dishdetails = new Array();
                 for (var prop in JSONdata){
 
                     var value = JSONdata[prop];
@@ -62,20 +53,18 @@ function onRequest(request, response) {
                     var ingredients = value.ingredients;
 
                     if (name){
-                        if (rt.checkfridge(fridge, ingredients.item, ingredients.amount, ingredients.unit)){
-                            var ret1 = {"name" : name, "item": ingredients.item, "amount": ingredients.amount, "unit": ingredients.unit};
+                        // compare with the items in the fridge (item, amount, unit) to find out if the item is enough to cook
+                        if (func.checkfridge(fridge, ingredients.item, ingredients.amount, ingredients.unit)){
+                            var chosendish = {"name" : name, "item": ingredients.item, "amount": ingredients.amount, "unit": ingredients.unit};
                         }
 
-                        ret.push((ret1));
+                        dishdetails.push((chosendish));
                     }
 
                 }
-
-
-
-
-                var result = {'response' : ret};
+                var result = {'response' : dishdetails};
                 response.writeHead(200, {"Content-Type": "application/json"});
+                // Return the dish in Jason format.
                 response.write(JSON.stringify(result));
                 response.end();
 

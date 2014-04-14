@@ -1,8 +1,3 @@
-function route(pathname){
-	console.log("Request from " + pathname);
-
-}
-
 function checkDateInpuWithTodays(inputdate) {
     //get today's date in string
     var todayDate = new Date();
@@ -38,6 +33,5 @@ function checkfridge(fridge, ingredientsitem, ingredientsamount, ingredientsunit
     }
 }
 
-exports.route = route;
 exports.checkfridge = checkfridge;
 exports.checkDateInpuWithTodays = checkDateInpuWithTodays;
