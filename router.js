@@ -4,6 +4,7 @@ function route(pathname){
 }
 
 function checkDateInpuWithTodays(inputdate) {
+    console.log("starting checkDateInpuWithTodays");
     //get today's date in string
     var todayDate = new Date();
     //need to add one to get current month as it is start with 0

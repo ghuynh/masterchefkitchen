@@ -37,6 +37,8 @@ function onRequest(request, response) {
 				CSVdatafridgecsv = CSVdata.fridgecsv;
 				for (var i=0, len = CSVdatafridgecsv.length; i < len; i++) {
 					var CSVdatafridge = CSVdatafridgecsv[i].split(",");
+                    console.log('CSVdatafridge');
+                    console.log(CSVdatafridge);
                     if (!checkDateInpuWithTodays(CSVdatafridge[3])){
                         console.log(CSVdatafridge[0] + ' can not be used!');
                     }else{
