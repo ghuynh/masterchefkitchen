@@ -2,16 +2,13 @@ var http = require("http");
 var url = require("url");
 var qs = require("querystring");
 var fs = require('fs');
-// var $ = jQuery = require('jQuery');
-// require('./jquery.csv.js');
-
 
 var formOutput = '<html><body>'
     + '<h1>What to cook tonight - George Huynh\'s kitchen </h1>'
-    + '<h2>Please provide data for fridges in CSV and JSON formats</h2>'
+    + '<h2>Please provide data for fridges in CSV and recipes in JSON formats</h2>'
     + '<form method="post" action="." enctype="application/x-www-form-urlencoded"><fieldset>'
-    + '<div><label for="fridgecsv">CSV DATA:</label><textarea  id="fridgecsv" name="fridgecsv" cols=40 rows=6></textarea></div>'
-    + '<div><label for="fridgejson">JSON DATA:</label><textarea id="fridgejson" name="fridgejson" cols=40 rows=6></textarea></div>'
+    + '<div><label for="fridgecsv">Fridge DATA (CSV format):</label><textarea  id="fridgecsv" name="fridgecsv" cols=40 rows=6></textarea></div>'
+    + '<div><label for="fridgejson">Recipes DATA (JSON format)):</label><textarea id="fridgejson" name="fridgejson" cols=40 rows=6></textarea></div>'
 	+ '<div><input id="Post" type="submit" value="Advise what to cook tonight?" /></div></fieldset></form></body></html>';
 function start(route){
 function onRequest(request, response) {
@@ -40,7 +37,12 @@ function onRequest(request, response) {
 				CSVdatafridgecsv = CSVdata.fridgecsv;
 				for (var i=0, len = CSVdatafridgecsv.length; i < len; i++) {
 					var CSVdatafridge = CSVdatafridgecsv[i].split(",");
-					fridge.push(CSVdatafridge);
+                    if (!checkDateInpuWithTodays(CSVdatafridge[3])){
+                        console.log(CSVdatafridge[0] + ' can not be used!');
+                    }else{
+                        var CSVdatafridgearr = {"item": CSVdatafridge[0], "amount": CSVdatafridge[1], "unit": CSVdatafridge[3]};
+					    fridge.push(CSVdatafridgearr);
+                    }
 				}
   console.log('CSVdata array');
   console.log(fridge);				
@@ -48,9 +50,6 @@ function onRequest(request, response) {
 			    var JSONdata = JSON.parse(CSVdata.fridgejson);
   console.log('Json data');
   console.log(JSONdata);
-
-
-
 
                 var ret = new Array();
                 for (var prop in JSONdata){
@@ -60,11 +59,17 @@ function onRequest(request, response) {
                     var ingredients = value.ingredients;
 
                     if (name){
-                        var ret1 = {"item": ingredients.item, "amount": ingredients.amount, "unit": ingredients.unit};
+                        if (checkfridge(fridge, ingredients.item, ingredients.amount, ingredients.unit)){
+                            var ret1 = {"name" : name, "item": ingredients.item, "amount": ingredients.amount, "unit": ingredients.unit};
+                        }
+
                         ret.push((ret1));
                     }
 
                 }
+
+
+
 
                 var result = {'response' : ret};
                 response.writeHead(200, {"Content-Type": "application/json"});
